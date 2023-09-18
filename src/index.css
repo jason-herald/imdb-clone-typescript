@@ -1,0 +1,50 @@
+:root {
+  font-family: "Nunito Sans", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background-color: rgb(17, 24, 39);
+}
+a,
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 99vw;
+}
+
+.main-content {
+  flex: 1 0 auto;
+}
+
+.header,
+.footer {
+  flex-shrink: 0;
+}
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
