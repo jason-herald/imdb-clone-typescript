@@ -1,18 +1,17 @@
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
 import CardImage from "./CardImage";
-import { Movie, TVShow } from "../types";
-
+import { type Movie, type TVShow } from "../lib/types";
 
 type MovieCardProps = { movie: Movie | TVShow; isMovie?: boolean };
-const MovieCard = ({ movie, isMovie = true }: MovieCardProps): JSX.Element => {
+const MovieCard = ({ movie, isMovie = true }: MovieCardProps) => {
   const posterUrl: string = `https://image.tmdb.org/t/p/w200${movie.poster_path}`;
 
-  if ('title' in movie && isMovie) {
+  if ("title" in movie && isMovie) {
     return (
       <div className="movie-card">
         <Link to={`/movie/${movie.id}`}>
-          <CardImage src={posterUrl} alt={movie?.title} />
+          <CardImage src={posterUrl} alt={movie.title} />
 
           <h2 className="movie-title">{movie?.title}</h2>
           <div className="movie-info">
@@ -26,7 +25,7 @@ const MovieCard = ({ movie, isMovie = true }: MovieCardProps): JSX.Element => {
         </Link>
       </div>
     );
-  } else {
+  } else if ("name" in movie) {
     return (
       <div className="movie-card">
         <Link to={`/tv/${movie.id}`}>

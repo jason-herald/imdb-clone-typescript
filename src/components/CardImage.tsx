@@ -1,9 +1,9 @@
 import "../App.css";
 
-type cardImageProps = { src: string; altText: string };
+type cardImageProps = { src: string; alt: string };
 
-const CardImage = ({ src, altText }: cardImageProps): JSX.Element => {
-  return <img className="movie-poster" src={src} alt={altText} />;
+const CardImage = ({ src, alt }: cardImageProps): JSX.Element => {
+  return <img className="movie-poster" src={src} alt={alt} />;
 };
 
 export default CardImage;

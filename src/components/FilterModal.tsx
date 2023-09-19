@@ -1,23 +1,35 @@
+import { ChangeEvent, MouseEventHandler } from "react";
 import "../App.css";
-
+import { type Filter } from "../lib/types";
+type FilterModalProps = {
+  show: boolean;
+  handleFilterChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  clearFilters: () => void;
+  filters: Filter;
+  closeFilterModal: () => void;
+};
 const FilterModal = ({
   show,
   handleFilterChange,
   clearFilters,
   filters,
   closeFilterModal,
-}) => {
+}: FilterModalProps) => {
   if (!show) {
     return null;
   }
 
-  const stopPropagation = (e) => {
+  const stopPropagation: MouseEventHandler<HTMLDivElement> = (e) => {
     e.stopPropagation();
   };
-  const onStarClick = (rating:number) => {
-    handleFilterChange({ target: { id: "rating", value: rating } });
+  const onStarClick = (rating: number) => {
+    handleFilterChange({
+      target: { id: "rating", value: rating },
+    } as unknown as ChangeEvent<HTMLInputElement>);
   };
-  const handleSliderChange = (e) => {
+  const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleFilterChange(e);
   };
   return (

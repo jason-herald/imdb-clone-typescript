@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   fetchMovieDetails,
@@ -6,21 +6,31 @@ import {
   fetchMovieImages,
 } from "../helpers/api";
 import "../App.css";
+import {
+  type Credits,
+  type MovieDetails,
+  type Image,
+  type Cast,
+  type Backdrop,
+  type Crew,
+} from "../lib/types";
 
-const MovieDetailsPage = () => {
+const MovieDetailsPage = (): ReturnType<React.FC> => {
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [credits, setCredits] = useState({});
-  const [images, setImages] = useState({});
+  const [movie, setMovie] = useState<MovieDetails>({} as MovieDetails);
+  const [credits, setCredits] = useState<Credits>({} as Credits);
+  const [images, setImages] = useState<Image>({} as Image);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      const fetchedMovie = await fetchMovieDetails(id);
-      const fetchedCredits = await fetchMovieCredits(id);
-      const fetchedImages = await fetchMovieImages(id);
-      setMovie(fetchedMovie);
-      setCredits(fetchedCredits);
-      setImages(fetchedImages);
+      if (typeof id === "string") {
+        const fetchedMovie = await fetchMovieDetails(id);
+        const fetchedCredits = await fetchMovieCredits(id);
+        const fetchedImages = await fetchMovieImages(id);
+        setMovie(fetchedMovie);
+        setCredits(fetchedCredits);
+        setImages(fetchedImages);
+      }
     };
 
     fetchDetails();
@@ -53,7 +63,7 @@ const MovieDetailsPage = () => {
               </div>
               <p className="overview-text">{movie.overview}</p>
               <div className="crew-line">
-                {credits.crew?.slice(0, 3).map((crewMember) => (
+                {credits.crew?.slice(0, 3).map((crewMember: Crew) => (
                   <div className="crew-member" key={crewMember.id}>
                     <span>{crewMember.name}</span>
                     <span className="crew-role">{crewMember.job}</span>
@@ -65,7 +75,7 @@ const MovieDetailsPage = () => {
           <div className="section">
             <h2 className="cast-heading">Cast</h2>
             <div className="cast">
-              {credits.cast?.slice(0, 5).map((actor) => (
+              {credits.cast?.slice(0, 5).map((actor: Cast) => (
                 <div key={actor.id}>
                   <img
                     className="cast-img"
@@ -81,14 +91,16 @@ const MovieDetailsPage = () => {
           <div className="section images">
             <h2 className="images-heading">Images</h2>
             <div>
-              {images.backdrops?.slice(0, 6).map((image, index) => (
-                <img
-                  className="movie-img"
-                  key={index}
-                  src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
-                  alt="Movie backdrop"
-                />
-              ))}
+              {images.backdrops
+                ?.slice(0, 6)
+                .map((image: Backdrop, index: number) => (
+                  <img
+                    className="movie-img"
+                    key={index}
+                    src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
+                    alt="Movie backdrop"
+                  />
+                ))}
             </div>
           </div>
         </div>

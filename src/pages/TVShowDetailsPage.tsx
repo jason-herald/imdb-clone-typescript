@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   fetchTVShowDetails,
@@ -6,22 +6,30 @@ import {
   fetchTVShowImages,
 } from "../helpers/api";
 import "../App.css";
+import {
+  type TVShowDetails,
+  type Credits,
+  type Image,
+  type Crew,
+  type Backdrop,
+  type Cast,
+} from "../lib/types";
 
 const TVShowDetailsPage = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
-  const [credits, setCredits] = useState({});
-  const [images, setImages] = useState({});
+  const [movie, setMovie] = useState<TVShowDetails>({} as TVShowDetails);
+  const [credits, setCredits] = useState<Credits>({} as Credits);
+  const [images, setImages] = useState<Image>({} as Image);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      if (typeof(id)=="string"){
-      const fetchedMovie = await fetchTVShowDetails(id);
-      const fetchedCredits = await fetchTVShowCredits(id);
-      const fetchedImages = await fetchTVShowImages(id);
-      setMovie(fetchedMovie);
-      setCredits(fetchedCredits);
-      setImages(fetchedImages);
+      if (typeof id == "string") {
+        const fetchedMovie = await fetchTVShowDetails(id);
+        const fetchedCredits = await fetchTVShowCredits(id);
+        const fetchedImages = await fetchTVShowImages(id);
+        setMovie(fetchedMovie);
+        setCredits(fetchedCredits);
+        setImages(fetchedImages);
       }
     };
 
@@ -53,7 +61,7 @@ const TVShowDetailsPage = () => {
           </div>
           <p className="overview-text">{movie.overview}</p>
           <div className="crew-line">
-            {credits.crew?.slice(0, 3).map((crewMember) => (
+            {credits.crew?.slice(0, 3).map((crewMember: Crew) => (
               <div className="crew-member" key={crewMember.id}>
                 <span>{crewMember.name}</span>
                 <span className="crew-role">{crewMember.job}</span>
@@ -65,7 +73,7 @@ const TVShowDetailsPage = () => {
       <div className="section">
         <h2 className="cast-heading">Cast</h2>
         <div className="cast">
-          {credits.cast?.slice(0, 5).map((actor) => (
+          {credits.cast?.slice(0, 5).map((actor: Cast) => (
             <div key={actor.id}>
               <img
                 className="cast-img"
@@ -81,7 +89,7 @@ const TVShowDetailsPage = () => {
       <div className="section images">
         <h2 className="images-heading">Images</h2>
         <div>
-          {images.backdrops?.slice(0, 6).map((image, index) => (
+          {images.backdrops?.slice(0, 6).map((image: Backdrop, index) => (
             <img
               className="movie-img"
               key={index}

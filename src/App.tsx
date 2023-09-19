@@ -7,7 +7,6 @@ import ProductListingPageTvShows from "./pages/TvShowsListingPage";
 import TVShowDetailsPage from "./pages/TVShowDetailsPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage";
 import "./App.css";
-import "./types";
 
 const App = (): JSX.Element => {
   return (
