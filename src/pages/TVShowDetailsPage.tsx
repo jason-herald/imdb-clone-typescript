@@ -50,7 +50,7 @@ const TVShowDetailsPage = () => {
           <div className="info-line">
             <span className="star-rating">
               <span className="orange-star">&#9733; </span>
-              {movie.vote_average * 10}%
+              {Math.round(movie.vote_average * 10)}%
             </span>
             <span className="separator">|</span>
             <span className="release-date">{movie.first_air_date}</span>
